@@ -61,7 +61,27 @@ module "eks" {
       rolearn  = var.telemetry_manager_role
       username = "telemetry_manager_role"
       groups   = ["eks:k8s-metrics", "np:pod-reader", "system:masters"]
-    }
+    },
+    {
+      rolearn  = "arn:aws:iam::481665089566:role/github"
+      username = "github"
+      groups   = ["system:masters"]
+    },
+    {
+      rolearn  = "arn:aws:iam::481665089566:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_Administrator_Access_SSO_191d158c6a53b5e1"
+      username = "AWSReservedSSO_Administrator_Access_SSO_191d158c6a53b5e1"
+      groups   = ["system:masters"]
+    },
+    {
+      rolearn  = "arn:aws:iam::481665089566:role/aws-reserved/sso.amazonaws.com/AWSReservedSSO_Owner_Access_SSO_ed1fea9453f242c7"
+      username = "AWSReservedSSO_Owner_Access_SSO_ed1fea9453f242c7"
+      groups   = ["system:masters"]
+    },
+    {
+      rolearn  = "arn:aws:iam::481665089566:role/genesys_admin"
+      username = "481665089566"
+      groups   = ["system:masters"]
+    },
   ]
 
   tags = {

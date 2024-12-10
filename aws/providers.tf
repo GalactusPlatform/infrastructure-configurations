@@ -5,11 +5,13 @@ provider "nullplatform" {
 provider "aws" {
   region = "us-east-1"
   alias  = "stg"
+  assume_role {}
 }
 
 provider "aws" {
   region = "us-east-2"
   alias  = "production"
+  assume_role {}
 }
 
 # provider "kubernetes" {
