@@ -71,12 +71,12 @@ module "meta_production" {
 ################################################################################
 
 module "acm" {
-  source = "../acm"
+  source = "./modules/acm"
   providers = {
     aws = aws
   }
   domain_name  = var.domain_name
-  zone_id      = var.hosted_public_zone_id
+  zone_id      = module.route53.public_zone_id
   organization = var.organization
   account      = var.account
 }
@@ -86,7 +86,7 @@ module "acm" {
 ################################################################################
 
 module "alb" {
-  source = "../ec2-alb"
+  source = "./modules/ec2-alb"
   providers = {
     aws = aws
   }
