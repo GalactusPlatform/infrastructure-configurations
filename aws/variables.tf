@@ -39,7 +39,7 @@ variable "namespace" {
 
 variable "region" {
   type        = string
-  default     = "us-east-2"
+  default     = "us-east-1"
   description = "The AWS region to use"
 }
 
@@ -56,9 +56,9 @@ variable "vpc_stg" {
 variable "vpc_production" {
   description = "A VPC with public and private subnets"
   default = {
-    cidr            = "172.30.0.0/16"
-    private_subnets = ["172.30.0.0/20", "172.30.16.0/20", "172.30.32.0/20"]
-    public_subnets  = ["172.30.48.0/20", "172.30.64.0/20", "172.30.80.0/20"]
-    azs             = ["us-east-2a", "us-east-2b", "us-east-2c"]
+    cidr            = "172.31.0.0/16"
+    private_subnets = ["172.31.0.0/20", "172.31.16.0/20", "172.31.32.0/20"]
+    public_subnets  = ["172.31.48.0/20", "172.31.64.0/20", "172.31.80.0/20"]
+    azs             = ["us-east-1a", "us-east-1b", "us-east-1c"]
   }
 }

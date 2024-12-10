@@ -1,7 +1,3 @@
-locals {
-  cluster_name = "${var.organization}-${var.account}-cluster"
-}
-
 ################################################################################
 # Meta Module
 ################################################################################
@@ -51,7 +47,7 @@ module "meta_production" {
   nrn          = var.nrn
   namespace    = var.namespace
   vpc          = var.vpc_production
-  region       = "us-east-2"
+  region       = "us-east-1"
   suffix       = "production"
 
   nullplatform_role_arn                              = module.iam_roles_policies.nullplatform_role_arn
@@ -68,6 +64,37 @@ module "meta_production" {
 
   parameters_encryption = module.secret.parameters_encryption
 
+}
+
+################################################################################
+# ACM Module
+################################################################################
+
+module "acm" {
+  source = "../acm"
+  providers = {
+    aws = aws
+  }
+  domain_name  = var.domain_name
+  zone_id      = var.hosted_public_zone_id
+  organization = var.organization
+  account      = var.account
+}
+
+################################################################################
+# LB and SGs for EC2
+################################################################################
+
+module "alb" {
+  source = "../ec2-alb"
+  providers = {
+    aws = aws
+  }
+  certificate_arn    = module.acm.acm_certificate_arn
+  public_subnet_ids  = module.vpc.public_subnets
+  private_subnet_ids = module.vpc.private_subnets
+  vpc_id             = module.vpc.vpc_id
+  vpc_cidr           = var.vpc["cidr"]
 }
 
 ################################################################################
