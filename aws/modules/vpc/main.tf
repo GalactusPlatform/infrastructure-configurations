@@ -1,7 +1,7 @@
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "nullplatform-vpc"
+  name = "nullplatform-vpc-${var.suffix}"
   cidr = var.vpc["cidr"]
 
   providers = {

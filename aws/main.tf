@@ -32,6 +32,8 @@ module "meta_stg" {
 
   parameters_encryption = module.secret.parameters_encryption
 
+  acm_certificate_arn = module.acm.acm_certificate_arn
+
 }
 
 module "meta_production" {
@@ -64,6 +66,7 @@ module "meta_production" {
 
   parameters_encryption = module.secret.parameters_encryption
 
+  acm_certificate_arn = module.acm.acm_certificate_arn
 }
 
 ################################################################################
@@ -79,22 +82,6 @@ module "acm" {
   zone_id      = module.route53.public_zone_id
   organization = var.organization
   account      = var.account
-}
-
-################################################################################
-# LB and SGs for EC2
-################################################################################
-
-module "alb" {
-  source = "./modules/ec2-alb"
-  providers = {
-    aws = aws
-  }
-  certificate_arn    = module.acm.acm_certificate_arn
-  public_subnet_ids  = module.vpc.public_subnets
-  private_subnet_ids = module.vpc.private_subnets
-  vpc_id             = module.vpc.vpc_id
-  vpc_cidr           = var.vpc["cidr"]
 }
 
 ################################################################################
@@ -134,7 +121,7 @@ module "route53" {
     }
     "vpc_production" = {
       vpc_id     = module.meta_production.vpc_id
-      vpc_region = "us-east-2"
+      vpc_region = "us-east-1"
     }
   }
 }
@@ -154,4 +141,4 @@ module "iam_roles_policies" {
   assets_bucket_arns         = [module.meta_stg.assets_bucket_arn, module.meta_production.assets_bucket_arn]
   parameters_bucket_arns     = [module.meta_stg.parameters_bucket_arn, module.meta_production.parameters_bucket_arn]
   parameters_encryption_arns = [module.secret.parameters_encryption_arn]
-}
+} 

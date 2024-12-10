@@ -102,3 +102,7 @@ variable "parameters_encryption" {
   type        = string
   description = "The secret manager key to decrypt values"
 }
+
+variable "acm_certificate_arn" {
+  type = string
+}

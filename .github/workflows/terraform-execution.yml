@@ -94,6 +94,7 @@ jobs:
           terraform $terraform_command \
             -var "api_key=${{ secrets.APIKEY_NULLPLATFORM }}" \
             -var-file=terraform.tfvars \
+            --target module.meta_stg
             ${{ github.event_name == 'pull_request' && '-no-color ' || ''}}-input=false
         continue-on-error: true
 

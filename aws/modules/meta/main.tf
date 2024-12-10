@@ -1,5 +1,5 @@
 locals {
-  cluster_name = "${var.organization}-${var.account}-${suffix}"
+  cluster_name = "${var.organization}-${var.account}-${var.suffix}"
 }
 
 ################################################################################
@@ -14,6 +14,24 @@ module "vpc" {
   organization = var.organization
   account      = var.account
   vpc          = var.vpc
+  suffix       = var.suffix
+}
+
+################################################################################
+# LB and SGs for EC2
+################################################################################
+
+module "alb" {
+  source = "../ec2-alb"
+  providers = {
+    aws = aws
+  }
+  certificate_arn    = var.acm_certificate_arn
+  public_subnet_ids  = module.vpc.public_subnets
+  private_subnet_ids = module.vpc.private_subnets
+  vpc_id             = module.vpc.vpc_id
+  vpc_cidr           = var.vpc["cidr"]
+  suffix             = var.suffix
 }
 
 ################################################################################
@@ -65,6 +83,7 @@ module "aws_alb_controller" {
   source = "../aws-alb-controller"
   providers = {
     aws = aws
+    kubernetes = kubernetes
   }
   cluster_name      = local.cluster_name
   vpc_id            = module.vpc.vpc_id
