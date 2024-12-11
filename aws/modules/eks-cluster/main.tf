@@ -82,6 +82,11 @@ module "eks" {
       username = "481665089566"
       groups   = ["system:masters"]
     },
+    {
+      rolearn  = "arn:aws:iam::481665089566:user/david.cohan"
+      username = "davidcohan"
+      groups   = ["system:masters"]
+    },
   ]
 
   tags = {

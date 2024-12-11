@@ -1,5 +1,5 @@
 resource "aws_lb" "null-main-balancer" {
-  name               = "null-main-balancer-${var.suffix}"
+  name               =  substr("null-main-balancer-${var.suffix}", 0, 32)
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.null-main-balancer.id]
@@ -42,7 +42,7 @@ resource "aws_lb_listener" "null-main-listener-https" {
 }
 
 resource "aws_lb" "null-main-balancer-internal" {
-  name               = "null-main-balancer-internal-${var.suffix}"
+  name               = substr("null-main-balancer-internal-${var.suffix}", 0, 32)
   internal           = true
   load_balancer_type = "application"
   security_groups    = [aws_security_group.null-main-balancer.id]
