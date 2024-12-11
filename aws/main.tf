@@ -97,6 +97,29 @@ module "dimensions" {
 }
 
 ################################################################################
+# Nullplatform Lambda
+################################################################################
+
+module "null_lambda_dev" {
+  source = "./modules/nullplatform/lambda"
+
+  domain_name = var.domain_name
+  api_key     = var.api_key
+  nrn         = var.nrn
+  region      = "us-east-1"
+  suffix      = "development"
+
+  Lambda_function_role_arn = module.iam_roles_policies.nullplatform_role_arn
+
+  scope_manager_role       = module.iam_roles_policies.nullplatform_scope_workflow_role_arn
+  application_manager_role = module.iam_roles_policies.nullplatform_application_role_arn
+
+  hosted_zone_id        = module.route53.private_zone_id
+  hosted_public_zone_id = module.route53.public_zone_id
+
+}
+
+################################################################################
 # Buckets and Secret for objects
 ################################################################################
 
