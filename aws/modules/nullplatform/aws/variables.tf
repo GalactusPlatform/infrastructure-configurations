@@ -131,11 +131,6 @@ variable "public_load_balancer_listener_arn" {
   description = "The private alb listener arn used for ec2 and lambda"
 }
 
-variable "lambda_assets_bucket" {
-  type        = string
-  description = "The S3 bucket name where assets for Lambda are uploaded"
-}
-
 variable "Lambda_function_role_arn" {
   type        = string
   description = "The S3 bucket name where assets for Lambda are uploaded"

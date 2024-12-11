@@ -6,9 +6,7 @@ resource "nullplatform_provider_config" "aws" {
   provider = nullplatform
   nrn      = var.nrn
   type     = "aws-configuration"
-  dimensions = {
-    "env" : var.suffix
-  }
+  dimensions = {}
   attributes = jsonencode({
     iam = {
       scope_workflow_role = var.scope_manager_role
@@ -24,23 +22,4 @@ resource "nullplatform_provider_config" "aws" {
       hosted_public_zone_id = var.hosted_public_zone_id
     }
   })
-}
-
-resource "nullplatform_provider_config" "eks" {
-  provider = nullplatform
-  nrn      = var.nrn
-  type     = "eks-configuration"
-  dimensions = {
-    "env" : var.suffix
-  }
-  attributes = jsonencode({
-    cluster = {
-      id        = var.cluster_name,
-      namespace = "nullplatform"
-    },
-    web_pool_provider = "AWS:WEB_POOL:EKS"
-  })
-  depends_on = [
-    nullplatform_provider_config.aws
-  ]
 }

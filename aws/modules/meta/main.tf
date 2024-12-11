@@ -35,21 +35,6 @@ module "alb" {
 }
 
 ################################################################################
-# Buckets and Secret for objects
-################################################################################
-
-module "s3" {
-  source = "../s3-buckets"
-  providers = {
-    aws = aws
-  }
-  organization = var.organization
-  account      = var.account
-  namespace    = var.namespace
-  suffix       = var.suffix
-}
-
-################################################################################
 # EKS Cluster Module
 ################################################################################
 
@@ -82,7 +67,7 @@ module "eks_config" {
 module "aws_alb_controller" {
   source = "../aws-alb-controller"
   providers = {
-    aws = aws
+    aws        = aws
     kubernetes = kubernetes
   }
   cluster_name      = local.cluster_name
@@ -116,7 +101,7 @@ module "nullplatform_configuration" {
   hosted_public_zone_id = var.hosted_public_zone_id
 
   ec2_instance_profile             = var.nullplatform_instance_profile_arn
-  ec2_parameters_bucket            = module.s3.parameters_bucket
+  ec2_parameters_bucket            = var.parameters_bucket
   ec2_parameters_encryption_secret = var.parameters_encryption
 
   vpc_id                             = module.vpc.vpc_id
@@ -127,7 +112,6 @@ module "nullplatform_configuration" {
   public_load_balancer_arn           = module.alb.public_load_balancer_arn
   public_load_balancer_listener_arn  = module.alb.public_load_balancer_listener_arn
 
-  lambda_assets_bucket     = module.s3.assets_bucket
   Lambda_function_role_arn = var.nullplatform_role_arn
 
   suffix = var.suffix
