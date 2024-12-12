@@ -49,6 +49,41 @@ variable "scope_manager_role" {
   description = "Add admin role to the aws-auth configmap"
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "The VPC id used for ec2 and lambda"
+}
+
+variable "subnet_ids" {
+  type        = list(string)
+  description = "The subnet ids used for ec2 and lambda"
+}
+
+variable "security_group_ids" {
+  type        = list(string)
+  description = "The sg ids used for ec2 and lambda"
+}
+
+variable "private_load_balancer_arn" {
+  type        = string
+  description = "The private alb arn used for ec2 and lambda"
+}
+
+variable "private_load_balancer_listener_arn" {
+  type        = string
+  description = "The private alb listener arn used for ec2 and lambda"
+}
+
+variable "public_load_balancer_arn" {
+  type        = string
+  description = "The private alb arn used for ec2 and lambda"
+}
+
+variable "public_load_balancer_listener_arn" {
+  type        = string
+  description = "The private alb listener arn used for ec2 and lambda"
+}
+
 variable "Lambda_function_role_arn" {
   type        = string
   description = "The S3 bucket name where assets for Lambda are uploaded"

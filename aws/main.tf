@@ -129,6 +129,14 @@ module "null_lambda_dev" {
   hosted_zone_id        = module.route53.private_zone_id
   hosted_public_zone_id = module.route53.public_zone_id
 
+  vpc_id             = module.meta_stg.vpc_id
+  subnet_ids         = module.meta_stg.subnet_ids
+  security_group_ids = module.meta_stg.security_group_ids
+
+  private_load_balancer_arn          = module.meta_stg.private_load_balancer_arn
+  private_load_balancer_listener_arn = module.meta_stg.private_load_balancer_listener_arn
+  public_load_balancer_arn           = module.meta_stg.public_load_balancer_arn
+  public_load_balancer_listener_arn  = module.meta_stg.public_load_balancer_listener_arn
 }
 
 ################################################################################
